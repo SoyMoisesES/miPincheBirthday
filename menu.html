@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Gratis - Moises Bday</title>
+    <style>
+        :root {
+            --bg-color: #0b00d8; 
+            --text-color: #ffffff;
+            --accent-green: #00ff00;
+            --border-style: 1px dashed rgba(255, 255, 255, 0.3);
+            --font-main: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            border-bottom: var(--border-style);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--accent-green);
+            text-transform: uppercase;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        /* --- ESTILO DE LISTA (UNA SOLA COLUMNA) --- */
+        .menu-list {
+            display: flex;
+            flex-direction: column; /* Esto hace que sea una sola columna */
+            gap: 20px;
+        }
+
+        .menu-item {
+            border: var(--border-style);
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            display: flex; /* Para poner imagen a un lado del texto */
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+            transition: transform 0.2s;
+        }
+
+        .menu-item:hover {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: var(--accent-green);
+        }
+
+        /* --- ESTILO DE LAS IMÁGENES --- */
+        .product-img {
+            width: 120px;       /* Tamaño fijo para que se vea ordenado */
+            height: 120px;
+            object-fit: cover;  /* Recorta la imagen para que no se deforme */
+            border: 2px solid var(--accent-green);
+            background-color: #000; /* Fondo por si la imagen es transparente */
+            flex-shrink: 0; /* Evita que la imagen se aplaste si hay mucho texto */
+        }
+
+        .menu-info {
+            flex-grow: 1;
+        }
+
+        .menu-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .menu-desc {
+            font-size: 1rem;
+            margin: 0;
+            color: #ddd;
+        }
+
+        .back-btn {
+            display: block;
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 40px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .back-btn:hover { 
+            background-color: var(--accent-green); 
+            color: black;
+            border-color: var(--accent-green);
+        }
+
+        /* --- CELULAR (Responsive) --- */
+        @media (max-width: 600px) {
+            .menu-item {
+                flex-direction: column; /* En cel, la imagen va arriba */
+                text-align: center;
+            }
+            .product-img {
+                width: 100%; /* Imagen grande en celular */
+                height: 200px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cosas Gratis</h1>
+            <p>Todo esto va por mi cuenta (hasta agotar existencia)</p>
+            <p>Solo una tostada y una bebida por persona</p>
+        </div>
+
+        <div class="menu-list">
+            <div class="menu-item">
+                <img src="corona.png" alt="Cerveza Corona" class="product-img">
+                <div class="menu-info">
+                    <div class="menu-title">Cerveza Corona</div>
+                    <p class="menu-desc">Bien helada compadre. La clásica de siempre.</p>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <img src="victoria.png" alt="Cerveza Victoria" class="product-img">
+                <div class="menu-info">
+                    <div class="menu-title">Cerveza Victoria</div>
+                    <p class="menu-desc">La mestiza de México. Para los conocedores.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="tostada.png" alt="Tostada Ceviche" class="product-img">
+                <div class="menu-info">
+                    <div class="menu-title">Tostada de Ceviche</div>
+                    <p class="menu-desc">Zy.</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <img src="coca.png" alt="Refrescos" class="product-img">
+                <div class="menu-info">
+                    <div class="menu-title">Refrescos</div>
+                    <p class="menu-desc">Coca, Manzanita y Sprite para los que manejan.</p>
+                    <p class="menu-desc">Mejor pregunta de cuales si hay.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">< Regresar a la invitación</a>
+    </div>
+</body>
+</html>
