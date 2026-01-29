@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Moises - Si o No?</title>
+    <style>
+        /* --- VARIABLES Y ESTILO GENERAL --- */
+        :root {
+            /* Azul Profundo (Navy) elegante */
+            --bg-color: #0b00d8; 
+            --text-color: #ffffff;
+            --accent-yellow: #00ff00;
+            --border-style: 1px dashed rgba(255, 255, 255, 0.3);
+            --font-main: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* Para el preloader */
+        }
+
+        /* --- PANTALLA DE CARGA --- */
+        #pantalla-carga {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .texto-carga {
+            font-size: 1.5rem;
+            color: var(--accent-yellow);
+            text-align: center;
+            padding: 20px;
+            animation: parpadeo 1s infinite;
+        }
+
+        @keyframes parpadeo {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* --- CONTENEDOR GRID --- */
+        .container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        /* --- CAJAS --- */
+        .box {
+            border: var(--border-style);
+            padding: 25px;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .header-bar {
+            grid-column: 1 / -1;
+            border-bottom: var(--border-style);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-item { margin-bottom: 20px; }
+        
+        .info-label {
+            color: #aaa;
+            font-size: 0.75rem;
+            display: block;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .yellow-btn {
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 15px 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            font-family: var(--font-main);
+            margin-top: 10px;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .yellow-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-banner {
+            border: 1px solid var(--accent-yellow);
+            padding: 30px;
+            text-align: center;
+            background: rgba(255, 204, 0, 0.05);
+        }
+
+        .big-title {
+            font-size: 3.5rem;
+            margin: 10px 0;
+            line-height: 1;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .funny-quote {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            line-height: 1.4;
+            color: #ddd;
+        }
+
+        /* --- ESTILOS DE LA IMAGEN Y PIE DE FOTO --- */
+        .lobster-placeholder {
+            width: 100%;
+            /* Eliminé min-height, background y border */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        .lobster-placeholder img {
+            max-width: 100%;
+            height: auto;
+            /* SE ELIMINARON EL BORDE BLANCO Y LA ROTACIÓN */
+        }
+
+        /* NUEVO ESTILO PARA EL TEXTO DEBAJO DE LA IMAGEN */
+        .image-caption {
+            font-size: 1.3rem; /* Tamaño mediano */
+            margin-top: 15px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        .vertical-text {
+            color: var(--accent-yellow);
+            font-style: italic;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            .big-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-carga">
+        <div class="texto-carga">
+            &gt; Inicializando protocolo de fiesta...<br>
+            O sea que esta cargando la fnk pagina...
+        </div>
+        <div style="margin-top: 10px; font-family: monospace; color: var(--accent-yellow);">
+            [████████▒▒]
+        </div>
+    </div>
+
+    <div class="container" id="contenido-web">
+        <div class="header-bar">
+            <span>SHEKE MI CUARTO, SHEKE MI KAZA... Y NADA</span>
+            <span>LOGIN: MOISES</span>
+        </div>
+
+        <div class="sidebar">
+            <div class="box">
+                <h3 style="border-bottom: 1px dashed #555; padding-bottom:10px; margin-top:0;">DETALLES</h3>
+                <div class="info-item">
+                    <span class="info-label">CUÁNDO</span>
+                    <strong style="font-size: 1.2rem;">MARZO 07, 2026</strong><br>
+                    <span style="color: var(--accent-yellow); font-size: 2.5rem; font-weight: bold; line-height: 1;">04 pm</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">DÓNDE</span>
+                    <strong>Blvd. Juan Alonso de Torres Pte. #4030</strong>
+                    <br><span style="color: #ccc">Piletas IV, León.</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">CONTACTO</span>
+                    <strong>+52 (477) 183 46 39</strong>
+                </div>
+                <a href="https://wa.me/524771834639?text=Que+onda+pendejo+si+voy+a+tu+cumple" target="_blank" style="text-decoration: none;">
+                    <button class="yellow-btn">CONFIRMAR (WhatsApp)</button>
+                </a>
+            </div>
+
+            <div class="box" style="font-size: 0.8rem; color: #888;">
+                <span class="info-label">NOTA LEGAL</span>
+                <p>01 800 NO VENDO CIGARROS SUELTOS</p>
+                <p>mipincheCumpleaños.soymoiseses.github</p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            
+            <div class="box hero-banner">
+                <h2 style="color: var(--accent-yellow); margin: 0 0 10px 0; font-size: 1.8rem;">THE INTERNET WE WERE PROMISED...</h2>
+                <p style="font-size: 1.1rem;">No olvides llevar tu invitación impresa, tiene poderes mágicos (te dan cheve).</p>
+            </div>
+
+            <div class="box">
+                <div class="header-bar" style="border: none; margin: 0; font-size: 0.9rem; color: var(--accent-yellow);">
+                    <span>@MOISES_BDAY</span>
+                    <span>EST. 2026</span>
+                </div>
+                
+                <div class="lobster-placeholder">
+                    <img src="langosta.jpg" alt="Langosta">
+                    <p class="image-caption">ni venden langosta pero se ve cabrona</p>
+                </div>
+
+                <div style="text-align: center; margin-top: 10px;">
+                    <h1 class="big-title">¿SI, O NO PENDEJO?</h1>
+                    <div style="display: inline-block; border-top: 1px solid var(--accent-yellow); padding-top: 15px; width: 50%;">
+                        <p class="funny-quote">
+                            ¿Si, o no cabron?<br>
+                            <span style="color: var(--accent-yellow);">Nos robaron 70 M d DLLS</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <span class="info-label">CHAT EN VIVO (FAKE)</span>
+                <div style="margin-top: 15px;">
+                    <p><strong>@INVITADO_1:</strong> "Jalo mil porciento"</p>
+                    <p style="color: #888;">Hace 2 min</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loader = document.getElementById('pantalla-carga');
+                loader.style.display = 'none';
+                var contenido = document.getElementById('contenido-web');
+                contenido.style.opacity = '1';
+                document.body.style.overflow = 'auto';
+            }, 4000);
+        });
+    </script>
+
+</body>
+</html>
