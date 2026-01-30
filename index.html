@@ -25,18 +25,24 @@
 
         /* --- PANTALLA DE CARGA --- */
         #pantalla-carga {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-color); z-index: 9999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
         }
         .texto-carga {
             font-size: 1.5rem; color: var(--accent-green); text-align: center; padding: 20px;
             animation: parpadeo 1s infinite;
         }
-        @keyframes parpadeo {
-            0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
+        @keyframes parpadeo { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- MODAL FLOTANTE DE BIENVENIDA --- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 10000; align-items: center; justify-content: center;
+        }
+        .modal-box {
+            background: var(--bg-color); border: 2px solid var(--accent-green);
+            padding: 30px; text-align: center; max-width: 500px; width: 90%; position: relative;
         }
 
         /* --- LAYOUT --- */
@@ -111,7 +117,7 @@
             font-size: 1.3rem; margin-top: 15px; color: var(--text-color); text-align: center;
         }
 
-        /* --- COMENTARIOS REALES --- */
+        /* --- COMENTARIOS --- */
         .comment-form input {
             width: 100%; padding: 10px; margin-bottom: 10px; background: transparent;
             border: 1px solid #555; color: white; font-family: var(--font-main); box-sizing: border-box;
@@ -124,11 +130,9 @@
             background: rgba(0,0,0,0.3); padding: 10px; margin-bottom: 10px;
             border-left: 2px solid var(--accent-green);
         }
-        .loading-comments {
-            color: #aaa; text-align: center; font-style: italic;
-        }
+        .loading-comments { color: #aaa; text-align: center; font-style: italic; }
 
-        /* --- MODAL LOGIN --- */
+        /* --- MODAL LOGIN (SECRETO) --- */
         #login-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 10000; align-items: center; justify-content: center;
@@ -157,11 +161,31 @@
         </div>
     </div>
 
-    <div id="login-modal">
+    <div id="modal-eleccion" class="modal-overlay">
+        <div class="modal-box">
+            <h2 style="color: var(--accent-green); margin-bottom: 30px;">¡BIENVENIDO! ELIGE TU DESTINO</h2>
+            
+            <p style="margin-bottom:20px;">Antes de ver la invitación, ¿qué quieres hacer?</p>
+
+            <button class="yellow-btn" onclick="window.location.href='princesa.html'" style="margin-bottom: 15px;">
+                👸 TEST: QUÉ PRINCESA ERES
+            </button>
+            
+            <button class="yellow-btn" onclick="window.location.href='juego.html'" style="background: transparent; color: white; border: 1px solid white;">
+                🦞 JUEGO: ATRAPA LA LANGOSTA
+            </button>
+            
+            <p style="font-size: 0.8rem; margin-top: 20px; color: #aaa; cursor:pointer; text-decoration: underline;" onclick="cerrarEleccion()">
+                Saltar e ir directo a la invitación
+            </p>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal-overlay">
         <div class="login-box">
             <h2 style="color: var(--accent-green);">ACCESO SECRETO</h2>
-            <input type="text" id="user-input" placeholder="Usuario" style="width: 100%; padding: 10px; margin-bottom: 10px; font-family: inherit;">
-            <input type="password" id="pass-input" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 10px; font-family: inherit;">
+            <input type="text" id="user-input" placeholder="Usuario">
+            <input type="password" id="pass-input" placeholder="Contraseña">
             <button onclick="verificarLogin()" class="yellow-btn">ENTRAR</button>
             <button onclick="cerrarLogin()" style="background:none; border:none; color: white; margin-top: 10px; cursor: pointer;">Cancelar</button>
         </div>
@@ -279,19 +303,26 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgEfpnB-zNJqwVddvlIjMh23FpxT9y44KMmnPk7peoytbTLMhSvPugmWMbUuuCAZBV/exec"; 
         // ----------------------------------------------------
 
-        // 1. CARGA INICIAL
+        // --- CARGA INICIAL ---
         window.addEventListener('load', function() {
             setTimeout(function() {
+                // 1. Quitar pantalla de carga
                 document.getElementById('pantalla-carga').style.display = 'none';
+                
+                // 2. Mostrar la ventana de elección INMEDIATAMENTE
+                document.getElementById('modal-eleccion').style.display = 'flex';
+                
+                // 3. Cargar el fondo (aunque esté tapado por el modal)
                 document.getElementById('contenido-web').style.opacity = '1';
                 document.body.style.overflow = 'auto';
-            }, 4000);
 
-            // Cargar comentarios al iniciar
-            cargarComentarios();
+                cargarComentarios();
+            }, 4000);
         });
 
-        // 2. FUNCIONES DE LOGIN
+        // --- MANEJO DE VENTANAS ---
+        function cerrarEleccion() { document.getElementById('modal-eleccion').style.display = 'none'; }
+        
         function abrirLogin() { document.getElementById('login-modal').style.display = 'flex'; }
         function cerrarLogin() { document.getElementById('login-modal').style.display = 'none'; }
         
@@ -301,25 +332,22 @@
             if(user === "invitado" && pass === "fiesta") {
                 window.location.href = "ubicacion.html";
             } else {
-                alert("CONTRASEÑA INCORRECTA. ¿NO ESTÁS INVITADO O QUÉ?");
+                alert("CONTRASEÑA INCORRECTA.");
             }
         }
 
-        // 3. FUNCIONES DE COMENTARIOS REALES
+        // --- COMENTARIOS ---
         function cargarComentarios() {
-            if(SCRIPT_URL === "PEGAR_TU_URL_AQUI") return; // No intenta cargar si no has puesto la URL
-
+            if(SCRIPT_URL === "PEGAR_TU_URL_AQUI") return;
             fetch(SCRIPT_URL)
             .then(response => response.json())
             .then(data => {
                 const lista = document.getElementById('lista-comentarios');
-                lista.innerHTML = ""; // Limpiar
-                
+                lista.innerHTML = "";
                 if (data.length === 0) {
-                    lista.innerHTML = '<div class="loading-comments">Nadie ha comentado. Sé el primero.</div>';
+                    lista.innerHTML = '<div class="loading-comments">Nadie ha comentado.</div>';
                     return;
                 }
-
                 data.forEach(comentario => {
                     const div = document.createElement('div');
                     div.className = 'single-comment';
@@ -327,10 +355,7 @@
                     lista.appendChild(div);
                 });
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('lista-comentarios').innerHTML = '<div class="loading-comments">Error cargando comentarios.</div>';
-            });
+            .catch(error => console.error('Error:', error));
         }
 
         function enviarComentario() {
@@ -338,46 +363,23 @@
             const mensaje = document.getElementById('comentario-texto').value;
             const btn = document.getElementById('btn-enviar');
 
-            if(nombre === "" || mensaje === "") {
-                alert("Escribe nombre y mensaje, no seas flojo.");
-                return;
-            }
+            if(nombre === "" || mensaje === "") { alert("Escribe algo."); return; }
+            btn.innerText = "ENVIANDO..."; btn.disabled = true;
 
-            // Cambiar estado del botón
-            btn.innerText = "ENVIANDO...";
-            btn.disabled = true;
-
-            // Enviar a Google Sheets
             fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Importante para enviar datos a Google sin errores
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `nombre=${encodeURIComponent(nombre)}&mensaje=${encodeURIComponent(mensaje)}`
-            })
-            .then(() => {
-                // Limpiar y recargar
+            }).then(() => {
                 document.getElementById('comentario-texto').value = "";
-                btn.innerText = "ENVIAR COMENTARIO";
-                btn.disabled = false;
-                
-                // Agregamos manualmente el comentario para que se vea rápido
+                btn.innerText = "ENVIAR COMENTARIO"; btn.disabled = false;
                 const lista = document.getElementById('lista-comentarios');
                 const div = document.createElement('div');
                 div.className = 'single-comment';
                 div.innerHTML = '<strong>@' + nombre.toUpperCase() + ':</strong> ' + mensaje;
-                
-                // Lo ponemos al principio
                 lista.insertBefore(div, lista.firstChild);
-            })
-            .catch(error => {
-                alert("Hubo un error al enviar.");
-                btn.innerText = "ENVIAR COMENTARIO";
-                btn.disabled = false;
             });
         }
     </script>
-
 </body>
 </html>
