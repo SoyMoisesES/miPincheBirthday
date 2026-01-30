@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Zodiacal - Moises Bday</title>
+    <style>
+        :root { --bg-color: #0b00d8; --text-color: #ffffff; --accent-green: #00ff00; --font-main: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-main); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { max-width: 600px; width: 100%; text-align: center; border: 1px dashed white; padding: 30px; background: rgba(0,0,0,0.2); }
+        h1 { color: var(--accent-green); text-transform: uppercase; }
+        select { width: 100%; padding: 15px; margin: 20px 0; background: #000; color: white; border: 1px solid var(--accent-green); font-size: 1.2rem; font-family: inherit; }
+        .yellow-btn { background-color: var(--accent-green); color: #000; border: none; padding: 15px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; font-size: 1.2rem; margin-top: 10px; }
+        .yellow-btn:hover { transform: scale(1.05); }
+        
+        /* Estilos del resultado */
+        #resultado-box { margin-top: 30px; border-top: 1px dashed #555; padding-top: 20px; display: none; }
+        #resultado-texto { font-size: 1.3rem; font-weight: bold; margin-bottom: 20px; }
+        #resultado-img { 
+            max-width: 100%; 
+            height: 300px; 
+            object-fit: cover; 
+            border: 2px solid var(--accent-green); 
+            display: block; 
+            margin: 0 auto; 
+        }
+
+        .back-btn { display: inline-block; margin-top: 30px; color: #aaa; text-decoration: underline; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¿Qué Princesa Disney eres?</h1>
+        <p>Según tu signo zodiacal (100% real no fake)</p>
+        
+        <select id="signo-zodiacal">
+            <option value="Aries">Aries</option>
+            <option value="Tauro">Tauro</option>
+            <option value="Geminis">Géminis</option>
+            <option value="Cancer">Cáncer</option>
+            <option value="Leo">Leo</option>
+            <option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option>
+            <option value="Escorpio">Escorpio</option>
+            <option value="Sagitario">Sagitario</option>
+            <option value="Capricornio">Capricornio</option>
+            <option value="Acuario">Acuario</option>
+            <option value="Piscis">Piscis</option>
+        </select>
+
+        <button class="yellow-btn" onclick="calcularPrincesa()">DESCUBRIR VERDAD</button>
+
+        <div id="resultado-box">
+            <div id="emoji-grande" style="font-size: 4rem;"></div>
+            <div id="resultado-texto"></div>
+            <img id="resultado-img" src="" alt="Princesa">
+        </div>
+
+        <a href="index.html" class="back-btn">Regresar a la invitación</a>
+    </div>
+
+    <script>
+        function calcularPrincesa() {
+            const signo = document.getElementById('signo-zodiacal').value;
+            let resultado = "";
+            let emoji = "";
+            let imagen = ""; // Nombre del archivo de imagen
+
+            switch(signo) {
+                case 'Aries': 
+                    resultado = "Eres MULÁN. Te agarras a chingadazos con todos en la peda y terminas perdiendo el honor de tu familia."; 
+                    emoji="⚔️"; 
+                    imagen='mulan.png';
+                    break;
+                case 'Tauro': 
+                    resultado = "Eres LA BELLA DURMIENTE. Te tomas dos cheves y te quedas jeteada en el sillón a media fiesta."; 
+                    emoji="😴"; 
+                    imagen="aurora.png";
+                    break;
+                case 'Geminis': 
+                    resultado = "Eres ANA y ELSA. Ni tú te aguantas tu doble personalidad, un rato ríes y al otro estás llorando en el baño."; 
+                    emoji="❄️"; 
+                    imagen="frozen.jpg";
+                    break;
+                case 'Cancer': 
+                    resultado = "Eres LA SIRENITA. Haces un drama y lloras nomás porque no te pusieron la canción que pediste."; 
+                    emoji="🧜‍♀️"; 
+                    imagen="ariel.jpg";
+                    break;
+                case 'Leo': 
+                    resultado = "Eres JASMINE. Te sientes la dueña del lugar, exiges trato VIP y botella aunque no traigas ni un peso."; 
+                    emoji="🐯"; 
+                    imagen="jasmine.jpg";
+                    break;
+                case 'Virgo': 
+                    resultado = "Eres CENICIENTA. Te pones a recoger los vasos vacíos y limpiar la mesa antes de que se acabe la fiesta por TOC."; 
+                    emoji="🧹"; 
+                    imagen="cenicienta.jpg";
+                    break;
+                case 'Libra': 
+                    resultado = "Eres POCAHONTAS. Te pierdes y te encuentran 3 horas después hablando con el perro de la casa o con una planta."; 
+                    emoji="🍂"; 
+                    imagen="pocahontas.gif";
+                    break;
+                case 'Escorpio': 
+                    resultado = "Eres MALÉFICA. Vas a la fiesta nomás a ver a quién le arruinas la noche (y te encanta, tóxica)."; 
+                    emoji="😈"; 
+                    imagen="malefica.jpeg";
+                    break;
+                case 'Sagitario': 
+                    resultado = "Eres MÉRIDA. Nadie te entiende ni madres cuando hablas después de tres tragos. Puro balbuceo."; 
+                    emoji="🏹"; 
+                    imagen="merida.jpg";
+                    break;
+                case 'Capricornio': 
+                    resultado = "Eres TIANA. Estás estresada checando correos del trabajo en plena peda. ¡Suelta el celular!"; 
+                    emoji="🐸"; 
+                    imagen="tiana.jpg";
+                    break;
+                case 'Acuario': 
+                    resultado = "Eres ALICIA. Vives en tu propio mundo bien viaje, seguro te metiste algo raro antes de llegar."; 
+                    emoji="🍄"; 
+                    imagen="alicia.jpeg";
+                    break;
+                case 'Piscis': 
+                    resultado = "Eres BLANCANIEVES. Te encanta ir al baño a 'polvearte la nariz' muy seguido y terminas hablando con animales imaginarios."; 
+                    emoji="🍎"; 
+                    imagen="blancanieves.jpeg";
+                    break;
+            }
+            
+            // Mostrar los resultados
+            document.getElementById('resultado-box').style.display = 'block';
+            document.getElementById('emoji-grande').innerText = emoji;
+            document.getElementById('resultado-texto').innerText = resultado;
+            
+            // Asignar la imagen (Asegúrate de tener las imágenes en la carpeta)
+            document.getElementById('resultado-img').src = imagen;
+        }
+    </script>
+</body>
+</html>
