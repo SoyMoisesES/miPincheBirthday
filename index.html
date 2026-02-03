@@ -176,6 +176,51 @@
             .big-title { font-size: 2.2rem; }
             .header-bar { flex-direction: column; gap: 10px; text-align: center;}
         }
+
+        /* --- ESTILO KANYE (MBDTF) --- */
+        :root {
+            --kanye-red: #d61a27; /* El rojo del álbum */
+            --kanye-gold: #eec64d; /* El dorado del marco */
+        }
+
+        #intro-kanye {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--kanye-red);
+            z-index: 9998; /* Debajo de carga (9999) pero encima de todo lo demás */
+            display: none; /* Oculto al inicio */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .video-frame {
+            border: 8px solid var(--kanye-gold); /* El marco dorado */
+            padding: 0;
+            line-height: 0; /* Elimina espacios extra */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: black;
+            max-width: 90%;
+        }
+
+        .video-frame video {
+            display: block;
+            max-width: 100%;
+            max-height: 60vh; /* Que no sea gigante */
+        }
+
+        .skip-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.7);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .skip-btn:hover { background: white; color: var(--kanye-red); }
     </style>
 </head>
 <body>
@@ -188,6 +233,16 @@
         <div style="margin-top: 10px; font-family: monospace; color: var(--accent-green);">
             [████████▒▒]
         </div>
+    </div>
+
+    <div id="intro-kanye">
+        <div class="video-frame">
+            <video id="mi-video" playsinline>
+                <source src="ye.mp4" type="video/mp4">
+                Tu navegador no soporta video, chale.
+            </video>
+        </div>
+        <button class="skip-btn" onclick="terminarVideo()">SALTAR INTRO</button>
     </div>
 
     <div id="modal-premio" class="modal-overlay">
@@ -353,22 +408,51 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgEfpnB-zNJqwVddvlIjMh23FpxT9y44KMmnPk7peoytbTLMhSvPugmWMbUuuCAZBV/exec"; 
         // ----------------------------------------------------
 
-        // --- CARGA INICIAL ---
+        // --- SECUENCIA DE INICIO ---
         window.addEventListener('load', function() {
             setTimeout(function() {
-                // 1. Quitar pantalla de carga
+                // 1. Quitar pantalla de carga (la negra con letras verdes)
                 document.getElementById('pantalla-carga').style.display = 'none';
                 
-                // 2. Mostrar BOLETO DORADO (Nuevo)
-                document.getElementById('modal-premio').style.display = 'flex';
+                // 2. Mostrar la pantalla ROJA de Kanye
+                var capaVideo = document.getElementById('intro-kanye');
+                capaVideo.style.display = 'flex';
                 
-                // 3. Cargar el fondo
-                document.getElementById('contenido-web').style.opacity = '1';
-                document.body.style.overflow = 'auto';
+                // 3. Reproducir video
+                var video = document.getElementById('mi-video');
+                video.play().catch(error => {
+                    // Si el navegador bloquea el autoplay (común si tiene sonido), mostramos controles
+                    console.log("Autoplay bloqueado, mostrando controles");
+                    video.controls = true; 
+                });
 
-                cargarComentarios();
-            }, 4000);
+                // 4. Cuando el video termine, pasamos a lo siguiente
+                video.onended = function() {
+                    terminarVideo();
+                };
+
+            }, 3000); // 3 segundos de carga "hacker"
         });
+
+        function terminarVideo() {
+            var video = document.getElementById('mi-video');
+            video.pause(); // Por si le dieron a "Saltar"
+            
+            // Ocultar la capa roja
+            document.getElementById('intro-kanye').style.display = 'none';
+
+            // Mostrar el BOLETO DORADO (o lo que seguía originalmente)
+            document.getElementById('modal-premio').style.display = 'flex';
+            
+            // Cargar el fondo de la web principal
+            document.getElementById('contenido-web').style.opacity = '1';
+            document.body.style.overflow = 'auto';
+            
+            // Cargar comentarios si tienes la función
+            if(typeof cargarComentarios === "function") {
+                cargarComentarios();
+            }
+        }
 
         // --- MANEJO DE VENTANAS ---
         function cerrarPremio() {
@@ -439,3 +523,4 @@
     </script>
 </body>
 </html>
+
